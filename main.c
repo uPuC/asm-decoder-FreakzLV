@@ -22,27 +22,27 @@ const uint8_t flash_mem[] ={
     //2) 
     //0xA0 0xE0 -> 0xE0A0 -> 1110 0000 1010 0000
     //          LDI Rd, K -> 1110 KKKK dddd KKKK
-    //                                  d = 0x0A + 16 (ya que LDI inicia en 16)
+    //                                    d = 10 + 16 (ya que LDI inicia en 16)
     //                                  K = 0x00
     //                             LDI R26, 0x00
     
     //3) 
     //0xB2 0xE0 -> 0xE0B2 -> 1110 0000 1011 0010
     //          LDI Rd, K -> 1110 KKKK dddd KKKK
-    //                                  d = 0x0B + 16 (ya que LDI inicia en 16)
+    //                                    d = 11 + 16 (ya que LDI inicia en 16)
     //                                  K = 0x02
     //                             LDI R27, 0x02
     
     //4) 
     //0x0D 0x91 -> 0x910D -> 1001 0001 0000 1101
     //          LD Rd, X+ -> 1110 000d dddd 1101 (el 1101 es para X+)
-    //                                  d = 0x10
+    //                                    d = 16
     //                                LD R16, X+
 
     //5) 
     //0x00 0x30 -> 0x3000 -> 0011 0000 0000 0000
     //          CPI Rd, K -> 0011 KKKK dddd KKKK
-    //                                  d = 0x00 + 16 (ya que CPI inicia en 16)
+    //                                     d = 0 + 16 (ya que CPI inicia en 16)
     //                             CPI R16, 0x00
 
     //6) 
@@ -55,14 +55,14 @@ const uint8_t flash_mem[] ={
     //7) 
     //0x11 0x97 -> 0x9711 -> 1001 0111 0001 0001
     //         SBIW Rd, K -> 1001 0111 KKdd KKKK
-    //                                    d = 26 (d ∈ {24,26,28,30} el valor de "d" es la posicion del arreglo)
+    //                                    d = 26 (d ∈ {24,26,28,30} el valor de "d" es la posicion del arreglo o también visto como "24 + d*2")
     //                                  K = 0x01
     //                            SBIW R26, 0x01
 
     //8) 
     //0xC0 0xE0 -> 0xE0C0 -> 1110 0000 1100 0000
     //          LDI Rd, K -> 1110 KKKK dddd KKKK
-    //                                  d = 0x0C + 16 (ya que LDI inicia en 16)
+    //                                    d = 12 + 16 (ya que LDI inicia en 16)
     //                                  K = 0x00
     //                             LDI R28, 0x00
 
@@ -76,14 +76,14 @@ const uint8_t flash_mem[] ={
     //0xE0 0x09 -> 0x09E0 -> 0000 1001 1110 0000
     //         SBC Rd, Rr -> 0000 10rd dddd rrrr
     //                                  r = 0x00
-    //                                  d = 0x30
+    //                                    d = 30
     //                               SBC R30, R0
 
     //11) 
     //0x91 0x1E -> 0x1E91 -> 0001 1110 1001 0001
     //         ADC Rd, Rr -> 0001 11rd dddd rrrr
     //                                  r = 0x11
-    //                                  d = 0x09
+    //                                     d = 9
     //                               ADC R9, R17
 
     //12) 
@@ -96,7 +96,7 @@ const uint8_t flash_mem[] ={
     //13) 
     //0x17 0x51 -> 0x5117 -> 0101 0001 0001 0111
     //         SUBI Rd, K -> 0101 KKKK dddd KKKK
-    //                                  d = 0x01 + 16 (ya que SUBI inicia en 16)
+    //                                     d = 1 + 16 (ya que SUBI inicia en 16)
     //                                  K = 0x17
     //                            SUBI R17, 0x17
 
@@ -104,35 +104,35 @@ const uint8_t flash_mem[] ={
     //0xF4 0x0A -> 0x0AF4 -> 0000 1010 1111 0100
     //         SBC Rd, Rr -> 0000 10rd dddd rrrr
     //                                  r = 0x14
-    //                                  d = 0x0F
+    //                                    d = 15
     //                              SBC R15, R20
 
     //15) 
     //0x2F 0x0A -> 0x0A2F -> 0000 1010 0010 1111
     //         SBC Rd, Rr -> 0000 1010 0010 1111
     //                                  r = 0x1F
-    //                                  d = 0x02
+    //                                     d = 2
     //                               SBC R2, R31
 
     //16) 
     //0x95 0x1C -> 0x1C95 -> 0001 1100 1001 0101
     //         ADC Rd, Rr -> 0001 11rd dddd rrrr
     //                                  r = 0x05
-    //                                  d = 0x09
+    //                                     d = 9
     //                                ADC R9, R5
 
     //17) 
     //0x2F 0x65 -> 0x652F -> 0110 0101 0010 1111
     //         ORI Rd, K  -> 0001 KKKK dddd KKKK
     //                                  K = 0x5F
-    //                                  d = 0x02 + 16 (ya que SBR inicia en 16)
+    //                                     d = 2 + 16 (ya que SBR inicia en 16)
     //                             ORI R18, 0x5F
 
     //18) 
     //0x01 0x17 -> 0x1701 -> 0001 0111 0000 0001
     //         CP Rd, Rr  -> 0001 01rd dddd rrrr
     //                                  r = 0x11
-    //                                  d = 0x10 
+    //                                    d = 16 
     //                               CP R16, R17
 
     //19) 
@@ -146,21 +146,21 @@ const uint8_t flash_mem[] ={
     //0x0B 0x2F -> 0x2F0B -> 0010 1111 0000 1011
     //        MOV Rd, Rr  -> 0010 11rd dddd rrrr
     //                                  r = 0x1B
-    //                                  d = 0x10 
+    //                                    d = 16 
     //                              MOV R16, R27
 
     //21) 
     //0x1D 0x2F -> 0x2F1D -> 0010 1111 0001 1101
     //        MOV Rd, Rr  -> 0010 11rd dddd rrrr
     //                                  r = 0x1D
-    //                                 d = 0x101 
+    //                                    d = 17 
     //                              MOV R17, R29
 
     //22) 
     //0x01 0x17 -> 0x1701 -> 0001 0111 0000 0001
     //        CP Rd, Rr   -> 0001 01rd dddd rrrr
     //                                  r = 0x11
-    //                                  d = 0x10
+    //                                    d = 16
     //                               CP R16, R17
 
     //23) 
@@ -173,7 +173,7 @@ const uint8_t flash_mem[] ={
     //24) 
     //0x03 0x94 -> 0x9403 -> 1001 0100 0000 0011
     //            INC Rd  -> 1001 010d dddd 0011
-    //                                  d = 0x00
+    //                                     d = 0
     //                                    INC R0
 
     //25) 
@@ -183,11 +183,42 @@ const uint8_t flash_mem[] ={
 
 
 const uint16_t inst16_table[] = {
-  {0x0}, //NOP
+    0x00,   // e_NOP   → op16  completo
+    0x01,   // e_MOVW  → type7.op8
+    0x97,   // e_SBIW  → type5.op8
+    0x3D,   // e_BRNE  → type4.op6  (BRNE: cond==1)
+    0x09,   // e_EOR   → type2.op6  (CLR si Rd==Rr)
+    0x02,   // e_SBC   → type2.op6
+    0x07,   // e_ADC   → type2.op6
+    0x05,   // e_CP    → type2.op6
+    0x0B,   // e_MOV   → type2.op6
+    0x48,   // e_LDX   → type8.op7 
+    0x4A,   // e_INC   → type1.op7
+    0x0D,   // e_RCALL → type6.op4
+    0x0E,   // e_LDI   → type3.op4
+    0x03,   // e_CPI   → type3.op4
+    0x05,   // e_SUBI  → type3.op4
+    0x06,   // e_ORI   → type3.op4
 };
+
 
 enum{
     e_NOP,
+    e_EOR,
+    e_LDI,
+    e_SBIW,
+    e_LDX,
+    e_CPI,
+    e_BRBC,
+    e_RCALL,
+    e_SBC,
+    e_ADC,
+    e_MOVW,
+    e_SUBI,
+    e_ORI,
+    e_CP,
+    e_MOV,
+    e_INC,
 };
 
 
@@ -198,28 +229,77 @@ typedef union {
         uint16_t op4:4;
         uint16_t d5:5;
         uint16_t op7:7;
-    }type1; // e.g: LSR
+    }type1; // e.g: LSR, INC
     struct{
         uint16_t r4:4;
         uint16_t d5:5;
         uint16_t r1:1;
         uint16_t op6:6;
-    }type2; // e.g.: MOV,MUL,ADC,ADD,AND,
-    // TO-DO: Add more types as needed
+    }type2; // e.g.: MOV,MUL,ADC,ADD,AND,SBC,CP, EOR/CLR
+    struct {
+        uint16_t Klo : 4;
+        uint16_t d4  : 4;   /* d real = d4 + 16  (porque inician en 16) */
+        uint16_t Khi : 4;
+        uint16_t op4 : 4;
+    } type3; //Instrucciones inmediatas e.g.: LDI, CPI, SUBI, ORI
+    struct {
+        uint16_t cond : 3;  
+        uint16_t k7   : 7;
+        uint16_t op6  : 6;
+    } type4; //Branches e.g.: BRNE, BREQ, ...
+    struct {
+        uint16_t Klo : 4;
+        uint16_t d2  : 2;   /* d real = 24 + d2*2  (trabaja con valores d ∈ {24,26,28,30})*/
+        uint16_t Khi : 2;
+        uint16_t op8 : 8;
+    } type5; // e.g.: SBIW, ADIW (con WORD)
+    struct {
+        uint16_t k12 : 12; 
+        uint16_t op4 : 4;
+    } type6; // e.g.: RCALL
+    struct {
+        uint16_t r4  : 4;
+        uint16_t d4  : 4;
+        uint16_t op8 : 8;
+    } type7; // e.g.: MOVW
+    struct {
+        uint16_t mode : 4; /* (X, X+, -X) =  X=0xC, X+=0xD, -X=0xE */
+        uint16_t d5   : 5;
+        uint16_t op7  : 7;
+    } type8; // e.g.: LD
 } Op_Code_t;
 
+/* Funciones para impresión con valores de Rd y Rr segun el caso */
+void printType2(const Op_Code_t *inst, const char *op) {
+    uint8_t Rd = inst->type2.d5;
+    uint8_t Rr = (inst->type2.r1 << 4) | inst->type2.r4;
+    printf("%s R%d, R%d\n", op, Rd, Rr);
+}
+
+void printType3(const Op_Code_t *inst, const char *op) {
+    uint8_t Rd = inst->type3.d4 + 16;
+    uint8_t K  = (inst->type3.Khi << 4) | inst->type3.Klo;
+    printf("%s R%d, 0x%02X\n", op, Rd, K);
+}
 
 int main()
 {
     Op_Code_t *instruction;
-    printf("- Practica 2: AVR OpCode -\n");
+    printf("- Practica 2: AVR OpCode -\n\n");
     // Decode the instructions by cycling through the array
     for (uint8_t idx = 0; idx < sizeof(flash_mem); idx+=2)
     {
         instruction = (Op_Code_t*) &flash_mem[idx];
+        printf("[PC=0x%02X] ", idx / 2);
         if (instruction->op16 == inst16_table[e_NOP])
         {
             printf("NOP\n");
+        }
+        else if(instruction->type7.op8 == inst16_table[eMOVW])
+        {
+            uint8_t Rd = instruction -> type7.d4 * 2;
+            uint8_t Rr = instruction -> type7.r4 * 2;
+            printf("MOVW R%d:R%d, R%d:R%d\n", Rd+1, Rd, Rr+1, Rr)
         }
         else
         {
