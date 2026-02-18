@@ -49,7 +49,7 @@ const uint8_t flash_mem[] ={
     //0xE9 0xF7 -> 0xF7E9 -> 1111 0111 1110 1001
     //             BRNE k -> 1111 01kk kkkk k001
     //             k = 1111101 (el signo lo dicta el bit más significativo)
-    //             k = - 111101 -> le hacemos complemento a1 y queda -> 000010  y el - -> -2
+    //             k = - 111101 -> le hacemos complemento a2 y queda -> 000010 + 1 y el - -> -3 -> k + 1 -> -3 + 1 -> -2
     //                BRNE = PC - 0x02 -> PC - 2
 
     //7) 
@@ -139,7 +139,7 @@ const uint8_t flash_mem[] ={
     //0xB9 0xF7 -> 0xF7B9 -> 1111 0111 1011 1001
     //            BRNE k  -> 1111 01kk kkkk k001
     //             k = 1110111 (el signo lo dicta el bit más significativo)
-    //             k = - 110111-> le hacemos complemento a1 y queda -> 001000 y el - -> -8
+    //             k = - 110111-> le hacemos complemento a2 y queda -> 001000 + 1 y el - -> - 9 -> k + 1 -> -9 + 1 -> -8
     //                          BRNE = PC - 0x08 -> PC - 8
 
     //20) 
@@ -167,7 +167,7 @@ const uint8_t flash_mem[] ={
     //0x99 0xF7 -> 0xF799 -> 1111 0111 1001 1001
     //            BRNE k  -> 1111 01kk kkkk k001
     //             k = 1110011 (el signo lo dicta el bit más significativo)
-    //             k = - 110011-> le hacemos complemento a1 y queda -> 001100 y el - -> -12
+    //             k = - 110011-> le hacemos complemento a2 y queda -> 001100 + 1 y el - -> -13 -> k + 1 -> -13 + 1 -> -12
     //                          BRNE = PC - 0x0C -> PC - 12 
 
     //24) 
