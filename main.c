@@ -229,7 +229,7 @@ typedef union {
         uint16_t op4:4;
         uint16_t d5:5;
         uint16_t op7:7;
-    }type1; // e.g: LSR, INC, LDI (el op4 para LDI determina el modo -> (X, X+, -X) =  X=0xC, X+=0xD, -X=0xE ) 
+    }type1; // e.g: LSR, INC, LD (el op4 para LD determina el modo -> (X, X+, -X) =  X=0xC, X+=0xD, -X=0xE ) 
     struct{
         uint16_t r4:4;
         uint16_t d5:5;
